@@ -51,7 +51,7 @@ async function authenticate(username, password) {
 
 async function searchUser(username) {
     try {
-        let user = await singleAuthentication({
+        let user = await singleSearch({
             url: 'ldap://ldap.forumsys.com:389',
             adminDn: 'cn=read-only-admin,dc=example,dc=com',
             adminPassword: 'password',
