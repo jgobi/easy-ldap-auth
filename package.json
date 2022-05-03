@@ -1,0 +1,22 @@
+{
+  "name": "easy-ldap-auth",
+  "version": "0.1.0",
+  "description": "Makes LDAP authentication easy, with just enough options",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "author": "João Gabriel (https://github.com/jgobi)",
+  "license": "MIT",
+  "private": false,
+  "repository": "https://github.com/jgobi/easy-ldap-auth",
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "@types/ldapjs": "^2.2.2",
+    "debug": "^4.3.4",
+    "ldapjs": "^2.3.2"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
