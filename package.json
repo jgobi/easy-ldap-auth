@@ -1,6 +1,6 @@
 {
   "name": "easy-ldap-auth",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Makes LDAP authentication easy, with just enough options",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -11,6 +11,7 @@
   "scripts": {
     "test": "mocha"
   },
+  "keywords": ["ldap", "authentication", "auth", "easy", "wrapper", "ldapjs"],
   "dependencies": {
     "@types/ldapjs": "^2.2.2",
     "debug": "^4.3.4",
