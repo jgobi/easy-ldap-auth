@@ -17,7 +17,7 @@ I wanted a package that was straightforward to use, with a clean and modern code
 ## Installation
 
 ```
-npm install github:jgobi/easy-ldap-auth
+npm install easy-ldap-auth
 ```
 
 ## Usage
