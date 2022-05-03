@@ -4,7 +4,7 @@
   "description": "Makes LDAP authentication easy, with just enough options",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
-  "author": "João Gabriel (https://github.com/jgobi)",
+  "author": "João Gabriel <thejgobi@gmail.com> (https://github.com/jgobi)",
   "license": "MIT",
   "private": false,
   "repository": "https://github.com/jgobi/easy-ldap-auth",
