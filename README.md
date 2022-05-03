@@ -8,7 +8,7 @@ I wanted a package that was straightforward to use, with a clean and modern code
 
 ## Features
 
-- :sparkles: Easy to use.
+- :sparkles: Easy to use, with a clean API.
 - :wrench: Full type definitions.
 - :shield: Consistent errors.
 - :bug: Easy debugging with logs provided by the `debug` package.
