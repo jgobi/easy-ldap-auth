@@ -23,9 +23,9 @@ npm install github:jgobi/easy-ldap-auth
 ## Usage
 
 ```javascript
-let { singleAuthentication, InvalidUserCredentialsError } = require('easy-ldap-auth');
+let { singleAuthentication, singleSearch, InvalidUserCredentialsError } = require('easy-ldap-auth');
 
-async function authenticate(username, password)
+async function authenticate(username, password) {
     try {
         let user = await singleAuthentication({
             url: 'ldap://ldap.forumsys.com:389',
@@ -43,10 +43,28 @@ async function authenticate(username, password)
             // invalid user credentials
             return null;
         } else {
-            // other errors, like connection error or timeout
+            // ldapjs errors, like: admin bind error, connection error or timeout
             throw error;
         }
     }
+}
+
+async function searchUser(username) {
+    try {
+        let user = await singleAuthentication({
+            url: 'ldap://ldap.forumsys.com:389',
+            adminDn: 'cn=read-only-admin,dc=example,dc=com',
+            adminPassword: 'password',
+            userSearchBaseDn: 'dc=example,dc=com',
+            userSearchAttribute: 'uid',
+            username,
+        });
+        // `user` is the user LDAP entry or null if not found.
+        return user;
+    } catch (error) {
+        // ldapjs errors, like: admin bind error, connection error or timeout
+    }
+}
 ```
 
 ## Running tests
@@ -54,6 +72,16 @@ async function authenticate(username, password)
 Clone this repository, then run `npm install` and then `npm test`. An internet connection is required as the [forumsys' public LDAP server](https://www.forumsys.com/2014/02/22/online-ldap-test-server/) is used for testing.
 
 ## API
+
+### singleSearch(options)
+
+Perform a single search in a LDAP server. First, it binds as an admin user, then searchs for the given `username` in a given `baseDn`, and unbind the admin connection.
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| options | SingleSearchOptions | The options to use (see below). |
+
+**Returns** a Promise that resolves to the user LDAP entry if it is found, or null if it wasn't.
 
 ### singleAuthentication(options)
 
@@ -67,7 +95,7 @@ Perform a single authentication agains a LDAP server. First, it binds as an admi
 
 ## Objects
 
-### SingleAuthenticationOptions
+### SingleSearchOptions
 
 | Property  | Type | Description |
 | --------- | ---- | ----------- |
@@ -77,10 +105,15 @@ Perform a single authentication agains a LDAP server. First, it binds as an admi
 | userSearchBaseDn | string | The base DN to search for the user. |
 | userSearchAttribute | string | The attribute to search for the user. |
 | username | string | The username to search for. |
-| password | string | The password to use for the user. |
 | timeout | number | (optional) The timeout to use for the connection, in milliseconds. Defaults to 5000. |
 | tlsOptions | object | (optional) The TLS options to use for the connection. See [Node docs](https://nodejs.org/api/tls.html#tls_tls_connect_options_callback) for more info. |
 
+
+### SingleAuthenticationOptions (extends SingleSearchOptions)
+
+| Property  | Type | Description |
+| --------- | ---- | ----------- |
+| password | string | The password to use for the user. |
 
 ### InvalidUserCredentialsError (extends Error)
 

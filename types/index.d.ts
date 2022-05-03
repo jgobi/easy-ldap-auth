@@ -2,19 +2,22 @@
 
 import { SearchEntryObject } from 'ldapjs';
 
-export interface SingleAuthenticationOptions {
+export interface SingleSearchOptions {
   url: string;
   adminDn: string;
   adminPassword: string;
   userSearchBaseDn: string;
   userSearchAttribute: string;
   username: string;
-  password: string;
 
   timeout?: number;
 
   /** See TLS docs for node.js */
   tlsOptions?: Object;
+}
+
+export interface SingleAuthenticationOptions extends SingleSearchOptions {
+  password: string;
 }
 
 export interface BindOptions {
@@ -30,6 +33,10 @@ export interface BindOptions {
 
 export function singleAuthentication(
   options: SingleAuthenticationOptions
+): Promise<SearchEntryObject>;
+
+export function singleSearch(
+  options: SingleSearchOptions
 ): Promise<SearchEntryObject | null>;
 
 export class InvalidUserCredentialsError extends Error {
