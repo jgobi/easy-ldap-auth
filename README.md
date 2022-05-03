@@ -11,6 +11,7 @@ I wanted a package that was straightforward to use, with a clean and modern code
 - :sparkles: Easy to use.
 - :wrench: Full type definitions.
 - :shield: Consistent errors.
+- :bug: Easy debugging with logs provided by the `debug` package.
 
 
 ## Installation
@@ -87,3 +88,9 @@ Perform a single authentication agains a LDAP server. First, it binds as an admi
 | --------- | ---- | ----------- |
 | username | string | The username searched. |
 | userFound | boolean | Whether the user was found or not (if false, invalid user; if true, invalid password). |
+
+----
+
+## License
+
+This sotftware is MIT licensed. Please check the [LICENSE](LICENSE) file for the full text.
