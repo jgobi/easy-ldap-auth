@@ -57,7 +57,7 @@ Clone this repository, then run `npm install` and then `npm test`. An internet c
 
 ### singleAuthentication(options)
 
-Perform a single authentication agains a LDAP server. First, it binds as an admin user, then searchs for the given `username` in a given `baseDn`, and unbind the admin connection. If the user is found, the function tries to bind to that user, resolving to the previous info if success, and then unbinding the user. If anything goes wrong, it throws an error. If the credentials for the admin or the user are invalid, it throws an `InvalidUserCredentialsError`.
+Perform a single authentication agains a LDAP server. First, it binds as an admin user, then searchs for the given `username` in a given `baseDn`, and unbind the admin connection. If the user is found, the function tries to bind to that user, resolving to the previous info if success, and then unbinding the user. If anything goes wrong, it throws an error. If the credentials for **the user** are invalid, it throws an `InvalidUserCredentialsError`.
 
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
