@@ -1,6 +1,6 @@
 # easy-ldap-auth
 
-Makes LDAP authentication easy, with just enough options. Inspired by [ldap-authentication](https://github.com/shaozi/ldap-authentication).
+Wrapper for the `ldapjs` library that makes LDAP authentication easy, with just enough options. Inspired by [ldap-authentication](https://github.com/shaozi/ldap-authentication).
 
 ## Why?
 
