@@ -106,7 +106,7 @@ describe('Easy LDAP Auth', function () {
       );
     });
 
-    it('should reject (in 2 seconds) if url is invalid', function () {
+    it('should reject (in 2 seconds) if ldap server not answering (eg blocked by a firewall)', function () {
       this.timeout(3000);
       return assert.rejects(
         () =>
@@ -122,7 +122,21 @@ describe('Easy LDAP Auth', function () {
         ConnectionError
       );
     });
+
+    it('should reject if url is invalid (connection refused)', function () {
+      return assert.rejects(() =>
+        singleSearch({
+          url: 'ldap://site_that_does_not_exists.localtld:389',
+          adminDn: 'cn=read-only-admin,dc=example,dc=com',
+          adminPassword: 'password',
+          userSearchBaseDn: 'dc=example,dc=com',
+          userSearchAttribute: 'uid',
+          username: 'gauss',
+        })
+      );
+    });
   });
+
   describe('singleAuthentication', function () {
     it('should work if everything is right', async function () {
       const user = await singleAuthentication({
@@ -222,57 +236,6 @@ describe('Easy LDAP Auth', function () {
             password: 'password',
           }),
         InvalidUserCredentialsError
-      );
-    });
-
-    it('should reject if invalid searchBaseDn', function () {
-      return assert.rejects(
-        () =>
-          singleAuthentication({
-            url: 'ldap://ldap.forumsys.com:389',
-            adminDn: 'cn=read-only-admin,dc=example,dc=com',
-            adminPassword: 'password',
-            userSearchBaseDn: 'dc=non_existing_example,dc=com',
-            userSearchAttribute: 'attribute',
-            username: 'gauss',
-            password: 'password',
-          }),
-        ldapjs.NoSuchObjectError
-      );
-    });
-
-    it('should reject if timeout (set to 50ms)', function () {
-      return assert.rejects(
-        () =>
-          singleAuthentication({
-            url: 'ldap://ldap.forumsys.com:389',
-            adminDn: 'cn=read-only-admin,dc=example,dc=com',
-            adminPassword: 'password',
-            userSearchBaseDn: 'dc=example,dc=com',
-            userSearchAttribute: 'attribute',
-            username: 'gauss',
-            password: 'password',
-            timeout: 50,
-          }),
-        ConnectionError
-      );
-    });
-
-    it('should reject (in 2 seconds) if url is invalid', function () {
-      this.timeout(3000);
-      return assert.rejects(
-        () =>
-          singleAuthentication({
-            url: 'ldap://wrong_ldap.forumsys.com:389',
-            adminDn: 'cn=read-only-admin,dc=example,dc=com',
-            adminPassword: 'password',
-            userSearchBaseDn: 'dc=example,dc=com',
-            userSearchAttribute: 'uid',
-            username: 'gauss',
-            password: 'password',
-            timeout: 2000,
-          }),
-        ConnectionError
       );
     });
   });
