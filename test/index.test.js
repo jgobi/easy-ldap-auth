@@ -2,12 +2,56 @@ const assert = require('assert');
 const ldapjs = require('ldapjs');
 const { ConnectionError } = require('ldapjs/lib/errors');
 const {
-  singleAuthentication,
+  bindSearch,
   singleSearch,
+  singleAuthentication,
   InvalidUserCredentialsError,
 } = require('../lib');
 
 describe('Easy LDAP Auth', function () {
+  describe('bindSearch', function () {
+    it('should return the user if everything is right', async function () {
+      const user = await bindSearch({
+        url: 'ldap://ldap.forumsys.com:389',
+        dn: 'uid=gauss,dc=example,dc=com',
+        password: 'password',
+      });
+      assert.equal(user.uid, 'gauss');
+    });
+
+    it('should reject if user is not found', async function () {
+      return assert.rejects(
+        () =>
+          bindSearch({
+            url: 'ldap://ldap.forumsys.com:389',
+            dn: 'uid=not_gauss,dc=example,dc=com',
+            password: 'password',
+          }),
+        (error) =>
+          error instanceof InvalidUserCredentialsError &&
+          error.userFound === false &&
+          error.username === 'uid=not_gauss,dc=example,dc=com' &&
+          error.message === 'User uid=not_gauss,dc=example,dc=com not found.'
+      );
+    });
+
+    it('should reject if password is invalid', function () {
+      return assert.rejects(
+        () =>
+          bindSearch({
+            url: 'ldap://ldap.forumsys.com:389',
+            dn: 'uid=gauss,dc=example,dc=com',
+            password: 'password_invalid',
+          }),
+        (error) =>
+          error instanceof InvalidUserCredentialsError &&
+          error.userFound === false &&
+          error.username === 'uid=gauss,dc=example,dc=com' &&
+          error.message === 'User uid=gauss,dc=example,dc=com not found.'
+      );
+    });
+  });
+
   describe('singleSearch', function () {
     it('should return the user if everything is right', async function () {
       const user = await singleSearch({

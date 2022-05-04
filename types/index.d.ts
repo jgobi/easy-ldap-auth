@@ -39,6 +39,10 @@ export function singleSearch(
   options: SingleSearchOptions
 ): Promise<SearchEntryObject | null>;
 
+export function bindSearch(
+  options: BindOptions
+): Promise<SearchEntryObject | null>;
+
 export class InvalidUserCredentialsError extends Error {
   username: string;
   userFound: boolean;
