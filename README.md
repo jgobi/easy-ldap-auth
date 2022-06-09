@@ -12,7 +12,7 @@ I wanted a package that was straightforward to use, with a clean and modern code
 - :wrench: Full type definitions.
 - :shield: Consistent errors.
 - :bug: Easy debugging with logs provided by the `debug` package.
-
+- :rocket: Used in production.
 
 ## Installation
 
